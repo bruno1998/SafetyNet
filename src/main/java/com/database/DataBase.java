@@ -10,7 +10,7 @@ public class DataBase {
 	
 	private List<Firestation> firestations;
 	private List<Person> persons;
-	private List<MedicalRecord> medicalRecords;
+	private List<MedicalRecord> medicalrecords;
 	
 	public List<Firestation> getFirestations() {
 		return firestations;
@@ -62,19 +62,19 @@ public class DataBase {
 		this.persons.remove(person);
 	}
 	public List<MedicalRecord> getMedicalRecords() {
-		return medicalRecords;
+		return medicalrecords;
 	}
 	
 	public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
-		this.medicalRecords = medicalRecords;
+		this.medicalrecords = medicalRecords;
 	}
 	
 	public void addMedicalRecord(MedicalRecord medicalRecords) {
-		this.medicalRecords.add(medicalRecords);
+		this.medicalrecords.add(medicalRecords);
 	}
 	
 	public void updateMedicalRecord(MedicalRecord medicalRecord) {
-		for (MedicalRecord mc : this.medicalRecords) {
+		for (MedicalRecord mc : this.medicalrecords) {
 			if (mc.getFirstName().equals(medicalRecord.getFirstName()) && mc.getLastName().equals(medicalRecord.getLastName())) {
 				mc = medicalRecord;
 				break;
@@ -83,7 +83,7 @@ public class DataBase {
 	}
 	
 	public void deleteMedicalRecord(MedicalRecord medicalRecord) {
-		this.medicalRecords.remove(medicalRecord);
+		this.medicalrecords.remove(medicalRecord);
 	}
 	
 }

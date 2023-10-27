@@ -22,6 +22,7 @@ import com.util.Utils;
 import com.repository.FirestationRepository;
 import com.repository.MedicalRecordRepository;
 
+
 import org.springframework.transaction.annotation.*;
 
 @Service
@@ -93,7 +94,6 @@ public class FirestationService {
 		}
 		List<String> listPhoneNumber = new ArrayList<String>();
 		for (Person person : listPersons) {
-			System.out.println(person.getPhone());
 			listPhoneNumber.add(person.getPhone());
 		}
 		

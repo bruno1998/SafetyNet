@@ -25,6 +25,7 @@ import com.database.model.MedicalRecord;
 import com.database.model.Person;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.repository.PersonRepository;
 import com.service.FirestationService;
 import com.service.MedicalRecordService;
 import com.service.PersonService;
@@ -48,6 +49,30 @@ public class SafetyNetController {
 	@GetMapping("/hello")
 	@ResponseBody
 	public String sayHello() throws IOException {
+		
+//		MedicalRecord mr = new MedicalRecord();
+//		mr.setFirstName("bruno");
+//		mr.setLastName("mazel");
+//		medicalRecordService.createMedicalRecord(mr);
+		
+		Firestation fs = new Firestation();
+		fs.setAddress("30 rue du puits");
+		fs.setStation("6");
+		firestationService.createFirestation(fs);
+		System.out.println("/////////////////");
+		Person person = new Person();
+		person.setFirstName("bruno");
+		person.setLastName("mazel");
+		person.setAddress("30 rue du puits");
+		
+		
+		personService.createPerson(person);
+		
+		System.out.println(personService.getListPersonByAddress("30 rue du puits"));
+		
+		
+		
+		
 		return "hello";
 	}
 	
