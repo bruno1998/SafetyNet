@@ -28,17 +28,11 @@ public class FirestationService {
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
 	
+		
 	
 	public List<Map<String, String>> getByStationNumber(String numberStation) throws JsonParseException, JsonMappingException, IOException{
 		
-		Map<String,String>monretourtemporaire = new HashMap<String,String>();
-		monretourtemporaire.put("nom", "charle");
-		monretourtemporaire.put("prénom","henrie");
-		monretourtemporaire.put("age","17");
-		monretourtemporaire.put("numéro de téléphone","0654525474");
-		List<Map<String,String>>listmonretourtemporaire = new ArrayList<Map<String,String>>();
-		listmonretourtemporaire.add(monretourtemporaire);
-		listmonretourtemporaire.add(monretourtemporaire);
+		List<Map<String,String>>listmonretour = new ArrayList<Map<String,String>>();
 		
 		ArrayList<String> retour = new ArrayList<>();
 		int adulte = 0;
@@ -50,13 +44,10 @@ public class FirestationService {
 		for (Firestation firestation : listFirestation) {
 			listAddress.add(firestation.getAddress());
 		}
-		
-		
+				
 		List<Person> listPerson = new ArrayList<>();
 		
 		for (String address : listAddress) {
-			
-			
 			List<Person> tmp = new ArrayList<>();
 			tmp = personRepository.getListByAddress(address);	
 			listPerson.addAll(tmp);
@@ -65,21 +56,23 @@ public class FirestationService {
 		List<MedicalRecord> listMedicalRecord = new ArrayList<>();
 		
 		for(Person person : listPerson) {
-			String tmp = "firstname : "+person.getFirstName()+" / lastname : "+person.getLastName()+" / phone number : "+person.getPhone();
-			retour.add(tmp);
+			Map<String,String> people = new HashMap<String,String>();
+			people.put("firstname", person.getFirstName());
+			people.put("lastname", person.getLastName() );
+			people.put("phone number", person.getPhone());
+			listmonretour.add(people);
 			MedicalRecord mc = medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName());
-
 			if (Utils.age(mc.getBirthdate()) > 18) {
 				adulte++;
 			}else {
 				enfant++;
 			}
 		}
-		monretourtemporaire = new HashMap<String,String>();
-		monretourtemporaire.put(" / nombre d'adulte : ",String.valueOf(adulte));
-		monretourtemporaire.put(" / nombre d'enfant : ",String.valueOf(enfant));
-		listmonretourtemporaire.add(monretourtemporaire);
-		return listmonretourtemporaire;
+		Map<String,String> numberAdultChildren = new HashMap<String,String>();
+		numberAdultChildren.put(" / nombre d'adulte : ",String.valueOf(adulte));
+		numberAdultChildren.put(" / nombre d'enfant : ",String.valueOf(enfant));
+		listmonretour.add(numberAdultChildren);
+		return listmonretour;
 	}
 	
 	public List<String> getPersonNumberByFirestationNumber(String firestation_number) throws JsonParseException, JsonMappingException, IOException{

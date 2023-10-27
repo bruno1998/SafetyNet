@@ -2,6 +2,7 @@ package com.openclassrooms.wawa;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,13 +38,12 @@ public class SafetyNetController {
 	@ResponseBody
 	@Transactional
 	public List<Map<String, String>> getFirestationByNumber(@RequestParam("stationNumber") String stationNumber) throws JsonParseException, JsonMappingException, NumberFormatException, IOException {
-		return null;
-//		return  firestationService.getByStationNumber(stationNumber);
+		return  firestationService.getByStationNumber(stationNumber);
 	}
 	
 	@GetMapping("childAlert")
 	@ResponseBody
-	public ArrayList<String> getListChildMissing(@RequestParam("address") String address) throws JsonParseException, JsonMappingException, IOException {
+	public List<Map<String, String>> getListChildMissing(@RequestParam("address") String address) throws JsonParseException, JsonMappingException, IOException {
 		return personService.getListPersonByAddress(address);
 	}
 	
@@ -55,29 +55,27 @@ public class SafetyNetController {
 		
 	@GetMapping("fire")
 	@ResponseBody
-	public Object getPeopleAndFirestationByAddress(@RequestParam("address") String address) throws JsonParseException, JsonMappingException, IOException {
-//		List<String> merde = personService.getListPersonByAddress(address);
-//		merde.add(firestationService.getFirestationNumberByAddress(address));
-//		return merde;
-		return null;
+	public List<Map<String,Object>> getPeopleAndFirestationByAddress(@RequestParam("address") String address) throws JsonParseException, JsonMappingException, IOException {
+		return personService.getListPersonByAddressWithMedicalRecord(address);
+
 	}
 	
 	@GetMapping("flood")
 	@ResponseBody
-	public String getListOfPeopleAndMedicalRecordByStation(@RequestParam("stations") String stations) {
-		return stations;
+	public Map<String,Object> getListOfPeopleAndMedicalRecordByStation(@RequestParam("stations") List<String> stations) throws JsonParseException, JsonMappingException, IOException {
+		return personService.getListOfPeopleSortedByAddressCoveredByThoseStations(stations);
 	}
 	
-	@GetMapping("personalInfo")
+	@GetMapping("personInfo")
 	@ResponseBody
-	public String getListOfPeopleAndMedicalRecordByFirstAndLastName(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname) {
-		return lastname;
+	public List<Map<String,Object>> getListOfPeopleAndMedicalRecordByFirstAndLastName(@RequestParam("firstName") String firstname, @RequestParam("lastName") String lastname) throws JsonParseException, JsonMappingException, IOException {
+		return personService.getPersonnalInformationOfPeople(firstname,lastname);
 	}
 	
 	@GetMapping("communityEmail")
 	@ResponseBody
-	public String getListOfEmailOfAllPeopleByCity(@RequestParam("city") String city) {
-		return city;
+	public List<String> getListOfEmailOfAllPeopleByCity(@RequestParam("city") String city) throws JsonParseException, JsonMappingException, IOException {
+		return personService.getAllEmailFromCity(city);
 	}
 
 }

@@ -2,7 +2,9 @@ package com.openclassrooms.wawa;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,36 +22,90 @@ public class PersonService {
 	@Autowired
 	private MedicalRecordRepository medicalRecordRepository;
 	
+	@Autowired
+	private FirestationRepository fireStationRepository;
 	
-	public ArrayList<String> getListPersonByAddress(String address) throws JsonParseException, JsonMappingException, IOException{		
+	public List<Map<String, String>> getListPersonByAddress(String address) throws JsonParseException, JsonMappingException, IOException{		
 		
 		List<Person> listPersons = personRepository.getListByAddress(address); 
 		
-		ArrayList<String> retour = new ArrayList<String>();
-		ArrayList<String> adulte = new ArrayList<String>();
+		List<Map<String, String>> retour = new ArrayList<Map<String,String>>();
+		
 		
 		boolean enfant = false;
 		for (Person person : listPersons) {
+			Map<String,String> people = new HashMap<String,String>();
 			int age = Utils.age(medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getBirthdate());
+			people.put("firstname", person.getFirstName());
+			people.put("lastname", person.getLastName());
 			if (age<18) {
-				retour.add("firstName : "+person.getFirstName()+" / lastName : "+person.getLastName()+" / age : "+ age);
+				people.put("age",String.valueOf(age));
 				enfant = true;
-			}else {
-				adulte.add("firstName : "+person.getFirstName()+" / lastName : " + person.getLastName());
 			}
+			retour.add(people);
 		}
 		if (enfant) {
-			retour.addAll(adulte);
 			return retour;
 		}
 		return null;
 	}
 	
-	public List<String> getListPersonByAddressWithMedicalRecord(String address) throws JsonParseException, JsonMappingException, IOException{
+	public List<Map<String, Object>> getListPersonByAddressWithMedicalRecord(String address) throws JsonParseException, JsonMappingException, IOException{
 
-		List<Person> listPersons = personRepository.getListByAddress(address); 
+		List<Map<String, Object>> retour = new ArrayList<Map<String,Object>>();
 		
-		return null;
+		List<Person> listPersons = personRepository.getListByAddress(address); 
+		for (Person person : listPersons) {
+			Map<String,Object> people = new HashMap<String,Object>();
+			int age = Utils.age(medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getBirthdate());
+			people.put("firstname", person.getFirstName());
+			people.put("lastname", person.getLastName());
+			people.put("phone number", person.getPhone());
+			people.put("age",String.valueOf(age));
+			people.put("allergie",medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getAllergies());
+			people.put("médicament",medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getMedications());
+			retour.add(people);
+		}
+		return retour;
 	}
 	
+	public Map<String,Object>getListOfPeopleSortedByAddressCoveredByThoseStations(List<String>stationsNumber) throws JsonParseException, JsonMappingException, IOException{
+		
+		Map<String,Object> retour = new HashMap<String,Object>();
+		
+		for (String stationNumber : stationsNumber) {
+			List<Firestation> listFirestation = fireStationRepository.getFirestationByNumber(stationNumber);
+			for (Firestation firestation : listFirestation) {
+				retour.put(firestation.getAddress(), this.getListPersonByAddressWithMedicalRecord(firestation.getAddress()));
+			}
+		}	
+		return retour;
+	}
+	
+	public List<Map<String,Object>> getPersonnalInformationOfPeople(String firstName, String lastname) throws JsonParseException, JsonMappingException, IOException{
+		List<Map<String,Object>> retour = new ArrayList<Map<String,Object>>();
+		
+		List<Person> persons = personRepository.getListByAddress(firstName, lastname);
+		for (Person person : persons) {
+			Map<String, Object> people = new HashMap<String, Object>();
+			people.put("fistname", person.getFirstName());
+			people.put("lastname", person.getLastName());
+			people.put("address", person.getAddress());
+			people.put("age", String.valueOf(Utils.age(medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getBirthdate())));
+			people.put("email", person.getEmail());
+			people.put("allergie",medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getAllergies());
+			people.put("médicament",medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName()).getMedications());
+			retour.add(people);
+		}
+		return retour;
+	}
+	
+	public List<String> getAllEmailFromCity(String city) throws JsonParseException, JsonMappingException, IOException{
+		List<String> retour = new ArrayList<String>();
+		List<Person> persons = personRepository.getListPersonByCity(city);
+		for (Person person : persons) {
+			retour.add(person.getEmail());
+		}	
+		return retour;
+	}
 }

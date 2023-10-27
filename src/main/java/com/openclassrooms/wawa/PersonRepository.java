@@ -32,6 +32,17 @@ public class PersonRepository extends JsonReader {
 		return persons;
 	}
 	
+	public List<Person> getListByAddress(String firstname, String lastname) throws JsonParseException, JsonMappingException, IOException{
+		List<Person> allPersons = this.getAllPerson();
+		List<Person> persons= allPersons.stream().filter(person -> person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)).toList();
+		return persons;
+	}
 	
+	public List<Person> getListPersonByCity(String city) throws JsonParseException, JsonMappingException, IOException{
+		List<Person> allPersons = this.getAllPerson();
+		List<Person> persons= allPersons.stream().filter(person -> person.getCity().equals(city)).toList();
+		return persons;
+		
+	}
 	
 }
