@@ -1,14 +1,18 @@
-package com.openclassrooms.wawa;
+package com.repository;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.database.DataBase;
+import com.database.model.Person;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.util.JsonReader;
 
 @Repository
 public class PersonRepository extends JsonReader {
@@ -44,5 +48,31 @@ public class PersonRepository extends JsonReader {
 		return persons;
 		
 	}
+	
+	
+	public Boolean createPerson(Person person) throws IOException {
+    	
+    	DataBase db = getDB();
+    	db.addPerson(person);
+    	this.updateDB(db);
+    	return true;
+    }
+	
+	
+	public Boolean updatePerson(Person person) throws IOException {
+		DataBase db = getDB();
+		db.updatePerson(person);
+		this.updateDB(db);
+		return true;
+	}
+	
+	
+	public Boolean deletePerson(Person person) throws IOException {
+		DataBase db = getDB();
+		db.deletePerson(person);
+		this.updateDB(db);
+		return true;
+	}
+
 	
 }

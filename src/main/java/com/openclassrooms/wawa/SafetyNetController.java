@@ -7,30 +7,47 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.database.model.Firestation;
+import com.database.model.MedicalRecord;
+import com.database.model.Person;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.service.FirestationService;
+import com.service.MedicalRecordService;
+import com.service.PersonService;
 
-import jakarta.websocket.server.PathParam;
 
-@Controller
+
+@RestController
 public class SafetyNetController {
 
-	@Autowired
-	private FirestationService firestationService;
+
 	
 	@Autowired
 	private PersonService personService;
 	
+	@Autowired
+	private MedicalRecordService medicalRecordService;
+
+	@Autowired(required=true)
+	private FirestationService firestationService;
+	
 	@GetMapping("/hello")
 	@ResponseBody
-	public String sayHello() {
+	public String sayHello() throws IOException {
 		return "hello";
 	}
 	
@@ -77,5 +94,76 @@ public class SafetyNetController {
 	public List<String> getListOfEmailOfAllPeopleByCity(@RequestParam("city") String city) throws JsonParseException, JsonMappingException, IOException {
 		return personService.getAllEmailFromCity(city);
 	}
+	
+	
+
+    @PostMapping("person")
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) throws IOException {
+    	personService.createPerson(person);
+    	return ResponseEntity.ok(person);
+    }
+
+    @PutMapping("person")
+    public ResponseEntity<Person> updatePerson(@RequestBody Person person) throws IOException {
+    	personService.updatePerson(person);
+    	return ResponseEntity.ok(person);
+    }
+
+    @DeleteMapping("person")
+    public ResponseEntity<Person> deletePreson(@RequestBody Person person) throws IOException {
+    	personService.deletePerson(person);
+    	return ResponseEntity.ok(person);
+    }
+    
+    
+
+    @PostMapping("firestation")
+    public ResponseEntity<Firestation> createFirestation(@RequestBody Firestation firestation) throws IOException {
+		firestationService.createFirestation(firestation);
+    	return ResponseEntity.ok(firestation);
+
+    }
+
+    @PutMapping("firestation")
+    public ResponseEntity<Firestation> updateFirestation(@RequestBody Firestation firestation) throws IOException {
+    	firestationService.updateFirestation(firestation);
+    	return ResponseEntity.ok(firestation);
+    }
+
+    @DeleteMapping("firestation")
+    public ResponseEntity<Firestation> deleteFirestation(@RequestBody Firestation firestation) throws IOException {
+    	firestationService.deleteFirestation(firestation);
+    	return ResponseEntity.ok(firestation);
+    }
+    
+    
+
+    @PostMapping("medicalRecord")
+    public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord) throws IOException {
+    	medicalRecordService.createMedicalRecord(medicalRecord);
+    	return ResponseEntity.ok(medicalRecord);
+    }
+
+    @PutMapping("medicalRecord")
+    public ResponseEntity<MedicalRecord> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) throws IOException {
+    	medicalRecordService.updateMedicalRecord(medicalRecord);
+    	return ResponseEntity.ok(medicalRecord);
+    }
+
+    @DeleteMapping("medicalRecord")
+    public ResponseEntity<MedicalRecord> deleteMedicalRecord(@RequestBody MedicalRecord medicalRecord) throws IOException {
+    	medicalRecordService.deleteMedicalRecord(medicalRecord);
+    	return ResponseEntity.ok(medicalRecord);
+    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

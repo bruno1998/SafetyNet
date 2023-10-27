@@ -1,4 +1,4 @@
-package com.openclassrooms.wawa;
+package com.database.model;
 
 import java.util.List;
 
@@ -48,6 +48,10 @@ public class MedicalRecord {
 	
 	public void setMedications(List<String> medications) {
 		this.medications = medications;
+	}
+	
+	public boolean equals(MedicalRecord mr) {
+		return (this.getLastName().equals(mr.getLastName()) && this.getFirstName().equals(mr.getFirstName()));
 	}
 
 }

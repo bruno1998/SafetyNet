@@ -1,4 +1,4 @@
-package com.openclassrooms.wawa;
+package com.database.model;
 
 public class Firestation {
 	
@@ -21,4 +21,7 @@ public class Firestation {
 		this.address = address;
 	}
 
+	public boolean equals(Firestation firestation) {
+		return this.getAddress().equals(firestation.getAddress());
+	}
 }

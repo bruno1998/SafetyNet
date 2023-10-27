@@ -1,4 +1,4 @@
-package com.openclassrooms.wawa;
+package com.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -12,8 +12,16 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.database.model.Firestation;
+import com.database.model.MedicalRecord;
+import com.database.model.Person;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.repository.PersonRepository;
+import com.util.Utils;
+import com.repository.FirestationRepository;
+import com.repository.MedicalRecordRepository;
+
 import org.springframework.transaction.annotation.*;
 
 @Service
@@ -96,6 +104,22 @@ public class FirestationService {
 	public String getFirestationNumberByAddress(String address) throws JsonParseException, JsonMappingException, IOException {
 		Firestation firestation = firestationRepository.getFirestationByAddress(address);
 		return firestation.getStation();
+	}
+	
+
+	public Boolean createFirestation(Firestation firestation) throws IOException {
+		firestationRepository.createFirestation(firestation);
+		return true;
+	}
+	
+	public Boolean updateFirestation(Firestation firestation) throws IOException {
+		firestationRepository.updateFirestation(firestation);
+		return true;
+	}
+	
+	public Boolean deleteFirestation(Firestation firestation) throws IOException {
+		firestationRepository.deleteFirestation(firestation);
+		return true;
 	}
 
 }

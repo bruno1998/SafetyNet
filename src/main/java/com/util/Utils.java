@@ -1,4 +1,4 @@
-package com.openclassrooms.wawa;
+package com.util;
 
 import java.time.LocalDate;
 import java.time.Period;

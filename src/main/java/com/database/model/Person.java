@@ -1,4 +1,4 @@
-package com.openclassrooms.wawa;
+package com.database.model;
 
 public class Person {
 	
@@ -57,4 +57,8 @@ public class Person {
 		this.email = email;
 	}
 
+	
+	public boolean equals(Person person) {
+		return (this.getLastName().equals(person.getLastName()) && this.getFirstName().equals(person.getFirstName()));
+	}
 }

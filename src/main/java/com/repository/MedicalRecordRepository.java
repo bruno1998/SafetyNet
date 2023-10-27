@@ -1,14 +1,17 @@
-package com.openclassrooms.wawa;
+package com.repository;
 
 import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.database.DataBase;
+import com.database.model.MedicalRecord;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.util.JsonReader;
 
 @Repository
 public class MedicalRecordRepository extends JsonReader {
@@ -31,6 +34,26 @@ public class MedicalRecordRepository extends JsonReader {
 		return medicalRecords;
 	}
 	
+	public Boolean createMedicalRecord(MedicalRecord medicalRecord) throws IOException {
+    	DataBase db = getDB();
+    	db.addMedicalRecord(medicalRecord);
+    	this.updateDB(db);
+    	return true;
+    }
 	
+
+	public Boolean updateMedicalRecord(MedicalRecord medicalRecord) throws IOException {
+		DataBase db = getDB();
+		db.updateMedicalRecord(medicalRecord);
+		this.updateDB(db);
+		return true;
+	}
 	
+	public Boolean deleteMedicalRecord(MedicalRecord medicalRecord) throws IOException {
+		DataBase db = getDB();
+		db.deleteMedicalRecord(medicalRecord);
+		this.updateDB(db);
+		return true;
+	}
+		
 }

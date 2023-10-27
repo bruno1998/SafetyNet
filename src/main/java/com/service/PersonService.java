@@ -1,4 +1,4 @@
-package com.openclassrooms.wawa;
+package com.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,8 +9,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.database.model.Firestation;
+import com.database.model.Person;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.repository.PersonRepository;
+import com.util.Utils;
+import com.repository.FirestationRepository;
+import com.repository.MedicalRecordRepository;
 
 @Service
 public class PersonService {
@@ -107,5 +113,20 @@ public class PersonService {
 			retour.add(person.getEmail());
 		}	
 		return retour;
+	}
+	
+	public Boolean createPerson(Person person) throws IOException {
+		personRepository.createPerson(person);
+		return true;
+	}
+	
+	public Boolean updatePerson(Person person) throws IOException {
+		personRepository.updatePerson(person);
+		return true;
+	}
+	
+	public Boolean deletePerson(Person person) throws IOException {
+		personRepository.deletePerson(person);
+		return true;
 	}
 }
