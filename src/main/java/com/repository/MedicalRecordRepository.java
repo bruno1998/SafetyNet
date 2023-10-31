@@ -16,7 +16,7 @@ import com.util.JsonReader;
 @Repository
 public class MedicalRecordRepository extends JsonReader {
 	
-	private String nodeName = "medicalrecords";
+	private String nodeName = "medicalRecords";
 
 	public MedicalRecordRepository(ObjectMapper objectMapper) {
 		super(objectMapper);

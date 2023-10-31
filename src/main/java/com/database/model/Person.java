@@ -1,6 +1,8 @@
 package com.database.model;
 
-public class Person {
+import com.util.JsonConverter;
+
+public class Person extends JsonConverter{
 	
 	private String firstName;
 	private String lastName;

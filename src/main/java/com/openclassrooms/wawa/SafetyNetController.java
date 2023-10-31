@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,36 +44,12 @@ public class SafetyNetController {
 	@Autowired
 	private MedicalRecordService medicalRecordService;
 
-	@Autowired(required=true)
+	@Autowired
 	private FirestationService firestationService;
 	
 	@GetMapping("/hello")
 	@ResponseBody
-	public String sayHello() throws IOException {
-		
-//		MedicalRecord mr = new MedicalRecord();
-//		mr.setFirstName("bruno");
-//		mr.setLastName("mazel");
-//		medicalRecordService.createMedicalRecord(mr);
-		
-		Firestation fs = new Firestation();
-		fs.setAddress("30 rue du puits");
-		fs.setStation("6");
-		firestationService.createFirestation(fs);
-		System.out.println("/////////////////");
-		Person person = new Person();
-		person.setFirstName("bruno");
-		person.setLastName("mazel");
-		person.setAddress("30 rue du puits");
-		
-		
-		personService.createPerson(person);
-		
-		System.out.println(personService.getListPersonByAddress("30 rue du puits"));
-		
-		
-		
-		
+	public String sayHello() throws IOException {	
 		return "hello";
 	}
 	
@@ -135,9 +112,12 @@ public class SafetyNetController {
     }
 
     @DeleteMapping("person")
-    public ResponseEntity<Person> deletePreson(@RequestBody Person person) throws IOException {
-    	personService.deletePerson(person);
-    	return ResponseEntity.ok(person);
+    public ResponseEntity<Person> deletePreson(@RequestHeader("firstName") String firstName, @RequestHeader("lastName") String lastName) throws IOException {
+    	Person p = new Person();
+    	p.setLastName(lastName);
+    	p.setFirstName(firstName);
+    	personService.deletePerson(p);
+    	return ResponseEntity.ok(p);
     }
     
     
@@ -156,9 +136,13 @@ public class SafetyNetController {
     }
 
     @DeleteMapping("firestation")
-    public ResponseEntity<Firestation> deleteFirestation(@RequestBody Firestation firestation) throws IOException {
-    	firestationService.deleteFirestation(firestation);
-    	return ResponseEntity.ok(firestation);
+    public ResponseEntity<Firestation> deleteFirestation(@RequestHeader("station") String station, @RequestHeader("address") String address) throws IOException {  	
+    	System.out.println(1);
+    	Firestation fs = new Firestation();
+    	fs.setAddress(address);
+    	fs.setStation(station);
+    	firestationService.deleteFirestation(fs);
+    	return ResponseEntity.ok(fs);
     }
     
     
@@ -176,7 +160,8 @@ public class SafetyNetController {
     }
 
     @DeleteMapping("medicalRecord")
-    public ResponseEntity<MedicalRecord> deleteMedicalRecord(@RequestBody MedicalRecord medicalRecord) throws IOException {
+    public ResponseEntity<MedicalRecord> deleteMedicalRecord(@RequestHeader("firstName") String firstName, @RequestHeader("lastName") String lastName) throws IOException {
+    	MedicalRecord medicalRecord = medicalRecordService.getByStationNumber(firstName, lastName);
     	medicalRecordService.deleteMedicalRecord(medicalRecord);
     	return ResponseEntity.ok(medicalRecord);
     }

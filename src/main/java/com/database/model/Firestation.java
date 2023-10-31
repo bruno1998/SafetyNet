@@ -1,6 +1,8 @@
 package com.database.model;
 
-public class Firestation {
+import com.util.JsonConverter;
+
+public class Firestation extends JsonConverter{
 	
 	private String address;
 	private String station;

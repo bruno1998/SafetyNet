@@ -118,6 +118,7 @@ public class FirestationService {
 	}
 	
 	public Boolean deleteFirestation(Firestation firestation) throws IOException {
+		System.out.println(2);
 		firestationRepository.deleteFirestation(firestation);
 		return true;
 	}

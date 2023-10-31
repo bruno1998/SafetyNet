@@ -2,7 +2,9 @@ package com.database.model;
 
 import java.util.List;
 
-public class MedicalRecord {
+import com.util.JsonConverter;
+
+public class MedicalRecord extends JsonConverter{
 
 	private String firstName;
 	private String lastName;
