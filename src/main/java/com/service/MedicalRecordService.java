@@ -17,13 +17,13 @@ import com.repository.PersonRepository;
 public class MedicalRecordService{
 
 	@Autowired
-	private PersonRepository personRepository;
+	public PersonRepository personRepository;
 	
 	@Autowired
-	private MedicalRecordRepository medicalRecordRepository;
+	public MedicalRecordRepository medicalRecordRepository;
 	
 	@Autowired
-	private FirestationRepository fireStationRepository;
+	public FirestationRepository firestationRepository;
 	
 	
 	public MedicalRecord getByStationNumber(String firstName, String lastName) throws JsonParseException, JsonMappingException, IOException{

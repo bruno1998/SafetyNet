@@ -23,13 +23,13 @@ public class PersonService {
 
 	
 	@Autowired
-	private PersonRepository personRepository;
+	public PersonRepository personRepository;
 	
 	@Autowired
-	private MedicalRecordRepository medicalRecordRepository;
+	public MedicalRecordRepository medicalRecordRepository;
 	
 	@Autowired
-	private FirestationRepository fireStationRepository;
+	public FirestationRepository firestationRepository;
 	
 	public List<Map<String, String>> getListPersonByAddress(String address) throws JsonParseException, JsonMappingException, IOException{		
 		
@@ -80,7 +80,7 @@ public class PersonService {
 		Map<String,Object> retour = new HashMap<String,Object>();
 		
 		for (String stationNumber : stationsNumber) {
-			List<Firestation> listFirestation = fireStationRepository.getFirestationByNumber(stationNumber);
+			List<Firestation> listFirestation = firestationRepository.getFirestationByNumber(stationNumber);
 			for (Firestation firestation : listFirestation) {
 				retour.put(firestation.getAddress(), this.getListPersonByAddressWithMedicalRecord(firestation.getAddress()));
 			}

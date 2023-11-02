@@ -11,7 +11,6 @@ import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
-import com.database.model.Firestation;
 import com.database.model.MedicalRecord;
 
 public class MedicalRecordRepositoryTest {

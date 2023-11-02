@@ -13,6 +13,8 @@ public class DataBase {
 	private List<MedicalRecord> medicalrecords;
 	
 	
+	public DataBase() {}
+	
 	
 	public DataBase(List<Firestation> firestations, List<Person> persons, List<MedicalRecord> medicalrecords) {
 		this.firestations = firestations;

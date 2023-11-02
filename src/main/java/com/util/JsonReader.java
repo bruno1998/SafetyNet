@@ -29,17 +29,17 @@ public class JsonReader{
 
     public Object readJsonData(final TypeReference type, final String nodeName) throws JsonParseException, JsonMappingException, IOException{
 
-        JsonNode jsonNode = objectMapper.readTree(new File("C:/Users/Bruno/eclipse-workspace-openclassrooms/SafetyNet_Alerts/src/main/java/com/openclassrooms/wawa/data.json"));
+        JsonNode jsonNode = objectMapper.readTree(new File("src/main/resources/data.json"));
         return (Object) objectMapper.readValue(jsonNode.get(nodeName).toString(), type );
     }
     
     public DataBase getDB() throws IOException {
-    	final JsonNode jsonNode = objectMapper.readTree(new File("C:/Users/Bruno/eclipse-workspace-openclassrooms/SafetyNet_Alerts/src/main/java/com/openclassrooms/wawa/data.json"));
+    	final JsonNode jsonNode = objectMapper.readTree(new File("src/main/resources/data.json"));
        	return  objectMapper.readValue(jsonNode.toString(), new TypeReference<DataBase>() {});
     }
     
     public void updateDB(DataBase db) throws JsonGenerationException, JsonMappingException, IOException {
-    	objectMapper.writeValue(new File("src/main/java/com/openclassrooms/wawa/data.json"), db);
+    	objectMapper.writeValue(new File("src/main/resources/data.json"), db);
     }  
     
 }

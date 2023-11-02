@@ -29,13 +29,13 @@ import org.springframework.transaction.annotation.*;
 public class FirestationService {
 	
 	@Autowired
-	private FirestationRepository firestationRepository;
+	public FirestationRepository firestationRepository;
 	
 	@Autowired
-	private PersonRepository personRepository;
+	public PersonRepository personRepository;
 	
 	@Autowired
-	private MedicalRecordRepository medicalRecordRepository;
+	public MedicalRecordRepository medicalRecordRepository;
 	
 		
 	
