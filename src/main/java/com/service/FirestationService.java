@@ -27,68 +27,73 @@ import org.springframework.transaction.annotation.*;
 
 @Service
 public class FirestationService {
-	
+
 	@Autowired
 	public FirestationRepository firestationRepository;
-	
+
 	@Autowired
 	public PersonRepository personRepository;
-	
+
 	@Autowired
 	public MedicalRecordRepository medicalRecordRepository;
-	
-		
-	
-	public List<Map<String, String>> getByStationNumber(String numberStation) throws JsonParseException, JsonMappingException, IOException{
-		
-		List<Map<String,String>>listmonretour = new ArrayList<Map<String,String>>();
-		
+
+
+
+	public List<Map<String, String>> getByStationNumber(String numberStation)
+			throws JsonParseException, JsonMappingException, IOException {
+
+		List<Map<String, String>> listmonretour = new ArrayList<Map<String, String>>();
+
 		ArrayList<String> retour = new ArrayList<>();
 		int adulte = 0;
 		int enfant = 0;
-		
-		List<Firestation> listFirestation = firestationRepository.getFirestationByNumber(numberStation);
-		
+
+		List<Firestation> listFirestation =
+				firestationRepository.getFirestationByNumber(numberStation);
+
 		List<String> listAddress = new ArrayList<>();
 		for (Firestation firestation : listFirestation) {
 			listAddress.add(firestation.getAddress());
 		}
-				
+
 		List<Person> listPerson = new ArrayList<>();
-		
+
 		for (String address : listAddress) {
 			List<Person> tmp = new ArrayList<>();
-			tmp = personRepository.getListByAddress(address);	
+			tmp = personRepository.getListByAddress(address);
 			listPerson.addAll(tmp);
 		}
-		
+
 		List<MedicalRecord> listMedicalRecord = new ArrayList<>();
-		
-		for(Person person : listPerson) {
-			Map<String,String> people = new HashMap<String,String>();
+
+		for (Person person : listPerson) {
+			Map<String, String> people = new HashMap<String, String>();
 			people.put("firstname", person.getFirstName());
-			people.put("lastname", person.getLastName() );
+			people.put("lastname", person.getLastName());
 			people.put("phone number", person.getPhone());
 			listmonretour.add(people);
-			MedicalRecord mc = medicalRecordRepository.getListFirstNameAndLastName(person.getFirstName(), person.getLastName());
+			MedicalRecord mc = medicalRecordRepository
+					.getListFirstNameAndLastName(person.getFirstName(), person.getLastName());
 			if (Utils.age(mc.getBirthdate()) > 18) {
 				adulte++;
-			}else {
+			} else {
 				enfant++;
 			}
 		}
-		Map<String,String> numberAdultChildren = new HashMap<String,String>();
-		numberAdultChildren.put(" / nombre d'adulte : ",String.valueOf(adulte));
-		numberAdultChildren.put(" / nombre d'enfant : ",String.valueOf(enfant));
+		Map<String, String> numberAdultChildren = new HashMap<String, String>();
+		numberAdultChildren.put(" / nombre d'adulte : ", String.valueOf(adulte));
+		numberAdultChildren.put(" / nombre d'enfant : ", String.valueOf(enfant));
 		listmonretour.add(numberAdultChildren);
 		return listmonretour;
 	}
-	
-	public List<String> getPersonNumberByFirestationNumber(String firestation_number) throws JsonParseException, JsonMappingException, IOException{
-		
-		List<Firestation> listFirestations = firestationRepository.getFirestationByNumber(firestation_number);
+
+	public List<String> getPersonNumberByFirestationNumber(String firestation_number)
+			throws JsonParseException, JsonMappingException, IOException {
+
+		List<Firestation> listFirestations =
+				firestationRepository.getFirestationByNumber(firestation_number);
 		List<Person> listPersons = new ArrayList<Person>();
-		
+
 		for (Firestation firestation : listFirestations) {
 			listPersons.addAll(personRepository.getListByAddress(firestation.getAddress()));
 		}
@@ -96,27 +101,28 @@ public class FirestationService {
 		for (Person person : listPersons) {
 			listPhoneNumber.add(person.getPhone());
 		}
-		
+
 		return listPhoneNumber;
 	}
-	
-	
-	public String getFirestationNumberByAddress(String address) throws JsonParseException, JsonMappingException, IOException {
+
+
+	public String getFirestationNumberByAddress(String address)
+			throws JsonParseException, JsonMappingException, IOException {
 		Firestation firestation = firestationRepository.getFirestationByAddress(address);
 		return firestation.getStation();
 	}
-	
+
 
 	public Boolean createFirestation(Firestation firestation) throws IOException {
 		firestationRepository.createFirestation(firestation);
 		return true;
 	}
-	
+
 	public Boolean updateFirestation(Firestation firestation) throws IOException {
 		firestationRepository.updateFirestation(firestation);
 		return true;
 	}
-	
+
 	public Boolean deleteFirestation(Firestation firestation) throws IOException {
 		firestationRepository.deleteFirestation(firestation);
 		return true;

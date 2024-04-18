@@ -9,10 +9,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-
+import com.controller.DemoApplication;
+import com.controller.SafetyNetController;
 import com.database.model.Firestation;
 
+@SpringBootTest(classes = DemoApplication.class)
 public class FirestationRepositoryTest {
 
     private int port = 8085;
@@ -25,13 +28,14 @@ public class FirestationRepositoryTest {
     	Firestation fs = new Firestation();
     	fs.setAddress("25 rue du chateau");
     	fs.setStation("8");
+    	SafetyNetController ctrl = new SafetyNetController();
+    	
     	HttpRequest request= HttpRequest.newBuilder()
                 .uri(URI.create(url+"/firestation"))
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(fs.toJson().toString())).build();
                 
     	HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        
     	assertEquals(response.statusCode(),200);
     	assertEquals(response.body(),fs.toJson().toString());
     	   	
