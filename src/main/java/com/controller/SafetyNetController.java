@@ -73,12 +73,12 @@ public class SafetyNetController {
 		return retour;
 	}
 
-	@GetMapping("childAlert")
+	@GetMapping("/childAlert")
 	@ResponseBody
 	public List<Map<String, String>> getListChildMissing(@RequestParam("address") String address){
 		logger.info("get the list of people from the address " + address+ " if there is a child registered in that house");
 		List<Map<String, String>> retour = null;
-		try {personService.getListPersonByAddress(address);
+		try {retour = personService.getListPersonByAddress(address);
 		} catch(IOException e) {
 			logger.error(e.toString());
 		}
@@ -86,7 +86,7 @@ public class SafetyNetController {
 		return retour;
 	}
 
-	@GetMapping("phoneAlert")
+	@GetMapping("/phoneAlert")
 	@ResponseBody
 	public List<String> getListOfPhoneNumberNearFirestation(@RequestParam("firestation") String firestation_number){
 		logger.info("get the list of phone number from people covered by the firestation number "+ firestation_number);
@@ -100,7 +100,7 @@ public class SafetyNetController {
 		return retour;
 	}
 
-	@GetMapping("fire")
+	@GetMapping("/fire")
 	@ResponseBody
 	public List<Map<String, Object>> getPeopleAndFirestationByAddress(@RequestParam("address") String address){
 		logger.info("get the list of people with their medical record from the address " + address);
@@ -114,7 +114,7 @@ public class SafetyNetController {
 
 	}
 
-	@GetMapping("flood")
+	@GetMapping("/flood")
 	@ResponseBody
 	public Map<String, Object> getListOfPeopleAndMedicalRecordByStation(@RequestParam("stations") List<String> stations){
 		logger.info("get the list of people covered by the firestation number +" + stations);
@@ -127,7 +127,7 @@ public class SafetyNetController {
 		return retour;
 	}
 
-	@GetMapping("personInfo")
+	@GetMapping("/personInfo")
 	@ResponseBody
 	public List<Map<String, Object>> getListOfPeopleAndMedicalRecordByFirstAndLastName(@RequestParam("firstName") String firstname, @RequestParam("lastName") String lastname){
 		logger.info(
@@ -141,7 +141,7 @@ public class SafetyNetController {
 		return retour;
 	}
 
-	@GetMapping("communityEmail")
+	@GetMapping("/communityEmail")
 	@ResponseBody
 	public List<String> getListOfEmailOfAllPeopleByCity(@RequestParam("city") String city){
 		logger.info("get the list of email from the people inside the city " + city);
@@ -156,7 +156,7 @@ public class SafetyNetController {
 
 
 
-	@PostMapping("person")
+	@PostMapping("/person")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person){
 		logger.info("create the person");
 		try {personService.createPerson(person);
@@ -167,7 +167,7 @@ public class SafetyNetController {
 		return ResponseEntity.ok(person);
 	}
 
-	@PutMapping("person")
+	@PutMapping("/person")
 	public ResponseEntity<Person> updatePerson(@RequestBody Person person){
 		logger.info("update the person firstname : " + person.getFirstName() + " lastname : "+ person.getLastName());
 		try {personService.updatePerson(person);
@@ -178,7 +178,7 @@ public class SafetyNetController {
 		return ResponseEntity.ok(person);
 	}
 
-	@DeleteMapping("person")
+	@DeleteMapping("/person")
 	public ResponseEntity<Person> deletePreson(@RequestHeader("firstName") String firstName, @RequestHeader("lastName") String lastName){
 		logger.info("delete the person firstname : " + firstName + " / lastname : " + lastName);
 		Person p = new Person();
@@ -193,7 +193,7 @@ public class SafetyNetController {
 
 
 
-	@PostMapping("firestation")
+	@PostMapping("/firestation")
 	public ResponseEntity<Firestation> createFirestation(@RequestBody Firestation firestation){
 		logger.info("create the firestation " + firestation.getStation() + " / "+ firestation.getAddress());
 		try {firestationService.createFirestation(firestation);
@@ -205,7 +205,7 @@ public class SafetyNetController {
 
 	}
 
-	@PutMapping("firestation")
+	@PutMapping("/firestation")
 	public ResponseEntity<Firestation> updateFirestation(@RequestBody Firestation firestation){
 		logger.info("update the firestation for the address" + firestation.getAddress());
 		try {firestationService.updateFirestation(firestation);
@@ -216,7 +216,7 @@ public class SafetyNetController {
 		return ResponseEntity.ok(firestation);
 	}
 
-	@DeleteMapping("firestation")
+	@DeleteMapping("/firestation")
 	public ResponseEntity<Firestation> deleteFirestation(@RequestHeader("station") String station, @RequestHeader("address") String address){
 		logger.info("delete the firestation station : " + station + " / " + "address : " + address);
 		Firestation fs = new Firestation();
@@ -231,7 +231,7 @@ public class SafetyNetController {
 
 
 
-	@PostMapping("medicalRecord")
+	@PostMapping("/medicalRecord")
 	public ResponseEntity<MedicalRecord> createMedicalRecord(@RequestBody MedicalRecord medicalRecord){
 		logger.info("create the medicalRecord for " + medicalRecord.getLastName() + " / "+ medicalRecord.getFirstName());
 		try {medicalRecordService.createMedicalRecord(medicalRecord);
@@ -242,7 +242,7 @@ public class SafetyNetController {
 		return ResponseEntity.ok(medicalRecord);
 	}
 
-	@PutMapping("medicalRecord")
+	@PutMapping("/medicalRecord")
 	public ResponseEntity<MedicalRecord> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord){
 		logger.info("update the medicalRecord for " + medicalRecord.getLastName() + " / "+ medicalRecord.getFirstName());
 		try {medicalRecordService.updateMedicalRecord(medicalRecord);
@@ -253,7 +253,7 @@ public class SafetyNetController {
 		return ResponseEntity.ok(medicalRecord);
 	}
 
-	@DeleteMapping("medicalRecord")
+	@DeleteMapping("/medicalRecord")
 	public ResponseEntity<MedicalRecord> deleteMedicalRecord(@RequestHeader("firstName") String firstName, @RequestHeader("lastName") String lastName){
 		logger.info("delete the medicalRecord firstname : " + firstName + " / lastname : " + lastName);
 		MedicalRecord medicalRecord = null;
