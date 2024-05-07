@@ -32,7 +32,7 @@ public class PersonService {
 	public FirestationRepository firestationRepository;
 
 	public List<Map<String, String>> getListPersonByAddress(String address)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 
 		List<Person> listPersons = personRepository.getListByAddress(address);
 
@@ -60,7 +60,7 @@ public class PersonService {
 	}
 
 	public List<Map<String, Object>> getListPersonByAddressWithMedicalRecord(String address)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 
 		List<Map<String, Object>> retour = new ArrayList<Map<String, Object>>();
 
@@ -87,7 +87,7 @@ public class PersonService {
 
 	public Map<String, Object> getListOfPeopleSortedByAddressCoveredByThoseStations(
 			List<String> stationsNumber)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 
 		Map<String, Object> retour = new HashMap<String, Object>();
 
@@ -103,7 +103,7 @@ public class PersonService {
 	}
 
 	public List<Map<String, Object>> getPersonnalInformationOfPeople(String firstName,
-			String lastname) throws JsonParseException, JsonMappingException, IOException {
+			String lastname) throws IOException {
 		List<Map<String, Object>> retour = new ArrayList<Map<String, Object>>();
 
 		List<Person> persons = personRepository.getListByAddress(firstName, lastname);
@@ -128,7 +128,7 @@ public class PersonService {
 	}
 
 	public List<String> getAllEmailFromCity(String city)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 		List<String> retour = new ArrayList<String>();
 		List<Person> persons = personRepository.getListPersonByCity(city);
 		for (Person person : persons) {

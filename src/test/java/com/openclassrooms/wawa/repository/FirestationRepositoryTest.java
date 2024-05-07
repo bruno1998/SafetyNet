@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.controller.DemoApplication;
-import com.controller.SafetyNetController;
 import com.database.model.Firestation;
 
 @SpringBootTest(classes = DemoApplication.class)
@@ -28,7 +27,6 @@ public class FirestationRepositoryTest {
     	Firestation fs = new Firestation();
     	fs.setAddress("25 rue du chateau");
     	fs.setStation("8");
-    	SafetyNetController ctrl = new SafetyNetController();
     	
     	HttpRequest request= HttpRequest.newBuilder()
                 .uri(URI.create(url+"/firestation"))

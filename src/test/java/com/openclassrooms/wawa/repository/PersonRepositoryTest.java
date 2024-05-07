@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.controller.DemoApplication;
-import com.controller.SafetyNetController;
+import com.controller.PersonController;
 import com.database.model.Person;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.repository.PersonRepository;
@@ -29,8 +29,7 @@ public class PersonRepositoryTest {
 	public void createPersonTest() throws IOException, InterruptedException {
 		
 
-		SafetyNetController ctrl = new SafetyNetController();
-		ctrl.sayHello();
+		PersonController ctrl = new PersonController();
 		
 		PersonService ps = new PersonService();
 		ObjectMapper objectMappper = new ObjectMapper();
@@ -38,7 +37,6 @@ public class PersonRepositoryTest {
 		ps.personRepository=pr;
 		ctrl.personService=ps;
 		
-    	HttpClient httpClient = HttpClient.newHttpClient();
     	Person pe = new Person();
     	pe.setFirstName("bruno");
     	pe.setLastName("mazel");
@@ -46,39 +44,11 @@ public class PersonRepositoryTest {
     	pe.setCity("blagnac");
     	pe.setPhone("0612345678");
     	ctrl.createPerson(pe);
-//    	HttpRequest request= HttpRequest.newBuilder()
-//                .uri(URI.create(url+"/person"))
-//                .header("Content-Type", "application/json")
-//                .POST(HttpRequest.BodyPublishers.ofString(pe.toJson().toString())).build();
-//                
-//    	HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-//        
-//    	assertEquals(response.statusCode(),200);
-//    	assertEquals(response.body(),pe.toJson().toString());
     	   	
     	pe.setPhone("0000000000");
     	ctrl.updatePerson(pe);
-//    	request= HttpRequest.newBuilder()
-//                .uri(URI.create(url+"/person"))
-//                .header("Content-Type", "application/json")
-//                .PUT(HttpRequest.BodyPublishers.ofString(pe.toJson().toString())).build();
-//    	
-//    	System.out.println("/////////////////////////////");
-//    	response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-//		System.out.println("/////////////////////////////");
-//		assertEquals(response.statusCode(),200);
-//    	assertEquals(response.body(),pe.toJson().toString());
    	
         ctrl.deletePreson(pe.getFirstName(), pe.getLastName());
-//    	request= HttpRequest.newBuilder()
-//                .uri(URI.create(url+"/person"))
-//                .header("firstName", "bruno")
-//                .header("lastName", "mazel")
-//                .header("Content-Type", "application/json")
-//                .DELETE().build();
-//    	
-//		response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-//        assertEquals(response.statusCode(),200);
 	}
 
 }

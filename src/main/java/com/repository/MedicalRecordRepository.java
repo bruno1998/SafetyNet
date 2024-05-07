@@ -23,13 +23,12 @@ public class MedicalRecordRepository extends JsonReader {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<MedicalRecord> getAllMedicalRecord() throws JsonParseException, JsonMappingException, IOException{
-		TypeReference type =  new TypeReference<List<MedicalRecord>>() {};
+	public List<MedicalRecord> getAllMedicalRecord() throws IOException{
 		return (List<MedicalRecord>) readJsonData(new TypeReference<List<MedicalRecord>>() {},nodeName);
 	}
 	
 	
-	public MedicalRecord getListFirstNameAndLastName(String firstName, String lastName) throws JsonParseException, JsonMappingException, IOException{
+	public MedicalRecord getListFirstNameAndLastName(String firstName, String lastName) throws IOException{
 		MedicalRecord medicalRecords= this.getAllMedicalRecord().stream().filter(medicalRecord-> medicalRecord.getFirstName().equals(firstName)  && medicalRecord.getLastName().equals(lastName)).toList().get(0);
 		return medicalRecords;
 	}

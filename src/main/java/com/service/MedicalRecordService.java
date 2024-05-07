@@ -27,7 +27,7 @@ public class MedicalRecordService {
 
 
 	public MedicalRecord getByStationNumber(String firstName, String lastName)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 		return medicalRecordRepository.getListFirstNameAndLastName(firstName, lastName);
 	}
 

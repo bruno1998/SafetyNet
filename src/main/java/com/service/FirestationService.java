@@ -40,11 +40,10 @@ public class FirestationService {
 
 
 	public List<Map<String, String>> getByStationNumber(String numberStation)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 
 		List<Map<String, String>> listmonretour = new ArrayList<Map<String, String>>();
 
-		ArrayList<String> retour = new ArrayList<>();
 		int adulte = 0;
 		int enfant = 0;
 
@@ -63,8 +62,6 @@ public class FirestationService {
 			tmp = personRepository.getListByAddress(address);
 			listPerson.addAll(tmp);
 		}
-
-		List<MedicalRecord> listMedicalRecord = new ArrayList<>();
 
 		for (Person person : listPerson) {
 			Map<String, String> people = new HashMap<String, String>();
@@ -88,7 +85,7 @@ public class FirestationService {
 	}
 
 	public List<String> getPersonNumberByFirestationNumber(String firestation_number)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 
 		List<Firestation> listFirestations =
 				firestationRepository.getFirestationByNumber(firestation_number);
@@ -107,7 +104,7 @@ public class FirestationService {
 
 
 	public String getFirestationNumberByAddress(String address)
-			throws JsonParseException, JsonMappingException, IOException {
+			throws IOException {
 		Firestation firestation = firestationRepository.getFirestationByAddress(address);
 		return firestation.getStation();
 	}

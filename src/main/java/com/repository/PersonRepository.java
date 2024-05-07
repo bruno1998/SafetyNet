@@ -24,25 +24,24 @@ public class PersonRepository extends JsonReader {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<Person> getAllPerson() throws JsonParseException, JsonMappingException, IOException{
-		TypeReference type =  new TypeReference<List<Person>>() {};
+	public List<Person> getAllPerson() throws IOException{
 		return (List<Person>) readJsonData(new TypeReference<List<Person>>() {},nodeName);
 	}
 	
 	
-	public List<Person> getListByAddress(String address) throws JsonParseException, JsonMappingException, IOException{
+	public List<Person> getListByAddress(String address) throws IOException{
 		List<Person> allPersons = this.getAllPerson();
 		List<Person> persons= allPersons.stream().filter(person -> person.getAddress().equals(address)).toList();
 		return persons;
 	}
 	
-	public List<Person> getListByAddress(String firstname, String lastname) throws JsonParseException, JsonMappingException, IOException{
+	public List<Person> getListByAddress(String firstname, String lastname) throws IOException{
 		List<Person> allPersons = this.getAllPerson();
 		List<Person> persons= allPersons.stream().filter(person -> person.getFirstName().equals(firstname) && person.getLastName().equals(lastname)).toList();
 		return persons;
 	}
 	
-	public List<Person> getListPersonByCity(String city) throws JsonParseException, JsonMappingException, IOException{
+	public List<Person> getListPersonByCity(String city) throws IOException{
 		List<Person> allPersons = this.getAllPerson();
 		List<Person> persons= allPersons.stream().filter(person -> person.getCity().equals(city)).toList();
 		return persons;
