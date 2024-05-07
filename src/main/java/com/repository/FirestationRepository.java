@@ -1,17 +1,13 @@
 package com.repository;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
 import com.database.DataBase;
 import com.database.model.Firestation;
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.util.JsonReader;
 
@@ -25,15 +21,13 @@ public class FirestationRepository extends JsonReader {
 		// TODO Auto-generated constructor stub
 	}
 
-	public List<Firestation> getAllFirestation()
-			throws IOException {
+	public List<Firestation> getAllFirestation() throws IOException {
 		return (List<Firestation>) readJsonData(new TypeReference<List<Firestation>>() {},
 				nodeName);
 	}
 
 
-	public List<Firestation> getFirestationByNumber(String firestationNumber)
-			throws IOException {
+	public List<Firestation> getFirestationByNumber(String firestationNumber) throws IOException {
 
 		List<Firestation> allFirestation = (List<Firestation>) this.getAllFirestation();
 		List<Firestation> azeaze = allFirestation.stream()
@@ -41,8 +35,7 @@ public class FirestationRepository extends JsonReader {
 		return azeaze;
 	}
 
-	public Firestation getFirestationByAddress(String address)
-			throws IOException {
+	public Firestation getFirestationByAddress(String address) throws IOException {
 		List<Firestation> allFirestation = (List<Firestation>) this.getAllFirestation();
 		List<Firestation> azeaze = allFirestation.stream()
 				.filter(firestation -> firestation.getAddress().equals(address)).toList();

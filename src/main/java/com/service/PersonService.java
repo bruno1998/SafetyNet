@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.database.model.Firestation;
 import com.database.model.Person;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.repository.PersonRepository;
 import com.util.Utils;
 import com.repository.FirestationRepository;
@@ -31,8 +29,7 @@ public class PersonService {
 	@Autowired
 	public FirestationRepository firestationRepository;
 
-	public List<Map<String, String>> getListPersonByAddress(String address)
-			throws IOException {
+	public List<Map<String, String>> getListPersonByAddress(String address) throws IOException {
 
 		List<Person> listPersons = personRepository.getListByAddress(address);
 
@@ -86,8 +83,7 @@ public class PersonService {
 	}
 
 	public Map<String, Object> getListOfPeopleSortedByAddressCoveredByThoseStations(
-			List<String> stationsNumber)
-			throws IOException {
+			List<String> stationsNumber) throws IOException {
 
 		Map<String, Object> retour = new HashMap<String, Object>();
 
@@ -127,8 +123,7 @@ public class PersonService {
 		return retour;
 	}
 
-	public List<String> getAllEmailFromCity(String city)
-			throws IOException {
+	public List<String> getAllEmailFromCity(String city) throws IOException {
 		List<String> retour = new ArrayList<String>();
 		List<Person> persons = personRepository.getListPersonByCity(city);
 		for (Person person : persons) {

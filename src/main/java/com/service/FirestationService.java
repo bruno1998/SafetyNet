@@ -1,9 +1,6 @@
 package com.service;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,15 +12,12 @@ import org.springframework.stereotype.Service;
 import com.database.model.Firestation;
 import com.database.model.MedicalRecord;
 import com.database.model.Person;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.repository.PersonRepository;
 import com.util.Utils;
 import com.repository.FirestationRepository;
 import com.repository.MedicalRecordRepository;
 
 
-import org.springframework.transaction.annotation.*;
 
 @Service
 public class FirestationService {
@@ -39,8 +33,7 @@ public class FirestationService {
 
 
 
-	public List<Map<String, String>> getByStationNumber(String numberStation)
-			throws IOException {
+	public List<Map<String, String>> getByStationNumber(String numberStation) throws IOException {
 
 		List<Map<String, String>> listmonretour = new ArrayList<Map<String, String>>();
 
@@ -103,8 +96,7 @@ public class FirestationService {
 	}
 
 
-	public String getFirestationNumberByAddress(String address)
-			throws IOException {
+	public String getFirestationNumberByAddress(String address) throws IOException {
 		Firestation firestation = firestationRepository.getFirestationByAddress(address);
 		return firestation.getStation();
 	}

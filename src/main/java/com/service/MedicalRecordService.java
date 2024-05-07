@@ -1,14 +1,11 @@
 package com.service;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.database.model.MedicalRecord;
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.repository.FirestationRepository;
 import com.repository.MedicalRecordRepository;
 import com.repository.PersonRepository;
@@ -26,8 +23,7 @@ public class MedicalRecordService {
 	public FirestationRepository firestationRepository;
 
 
-	public MedicalRecord getByStationNumber(String firstName, String lastName)
-			throws IOException {
+	public MedicalRecord getByStationNumber(String firstName, String lastName) throws IOException {
 		return medicalRecordRepository.getListFirstNameAndLastName(firstName, lastName);
 	}
 
